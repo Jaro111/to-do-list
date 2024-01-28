@@ -1,19 +1,19 @@
 import { useState } from 'react'
-import { useEffect } from 'react';
 import "./App.css"
 import ListSection from './ListSection'
-let newTask = '--------'
+
+// To add task to the list we need to type it first and press enter or click "add" button. 
+// To remove the task press "X" button 
+// To mark task as done press "check" button
 
 function App() {
+  // "Tak which will be added to list"
   const [task, setTask] = useState("")
+  // List
   const [toDo, setToDo] = useState([])
-  const [btnStatus, setBtnStatus] = useState(false)
-  const [noStyle, setNoStyle] = useState({textDecoration: 'none'});
+ 
 
-// const textDecotation = {
-//  setNoStyle({text-decoration: 'line-through'})
-// }
-
+  // Function to add task to the list. Takes parameter value which will be taken fro input
 const addToList = (value) => {
   let newArray = []
   newArray = [...toDo]
@@ -22,17 +22,19 @@ const addToList = (value) => {
   setTask("")
 }
 
+// Function to set input value as a task
   const handleChange = (event) => {
       setTask(event.target.value)
   }
 
+  // Function to remove selected task fron the list
 const handleRemove = (index) => { 
     let remArray = [...toDo]
     remArray.splice(index, 1)
     setToDo(remArray)
   }
 
-
+// Event listener for the keyboard. So when enter will pe pressed will do the same as mouse click on the "ADD" button 
 const handleKeyPress = (event) => {
   const key = event.key
   if (key === "Enter") {
@@ -40,51 +42,28 @@ const handleKeyPress = (event) => {
   }
 }
 
-const ChangeBtnStatus = (index, task) => {
-    let newArray = []
-    newArray = [...toDo]
-    console.log(toDo[index])
-    if (!newTask.includes('DONE')) {
-    newTask = `${index, task} *** DONE ***`
-    // newTask[index] = setNoStyle({textDecoration: 'line-through'})
-
-    }
-    newArray.splice(index, 1, newTask)
-    setToDo(newArray)
-}
-
-// const ChangeBtnStatus = (index) => {
-//   setBtnStatus(!btnStatus)
-//   console.log(btnStatus)
-//   // toDo[index] = setNoStyle({textDecoration: 'line-through'})
-//     // toDo[index] = setNoStyle({textDecoration: 'line-through'})
-// }
-
-
 
   return (
     <div className="backgroundContainer">
       <div className="fullContaier">
 
           <div className="inputContainer">
+            {/* Function onBlur will focus mouse cursor on the input. So even if we will click outside of the input we can still type on the keyboard and add task to 
+            the list by pressing enter without using the mouse to click on the input */}
             <input className="inputSpace" value={task}  onBlur={e => e.target.focus()} onChange={handleChange}
              onKeyUp={(event) => handleKeyPress(event)}></input>
-
+            {/* Button with function to add to the list */}
             <button className="addButton" onClick={() => addToList(task) } >ADD</button>
           </div>
 
           <div className="listContainer">
             <ul>
              {
+              // toDo list Iteration by index and task
               toDo.map((task, index) => {
-                return (
-                
+                return (           
                 <ListSection key={index} listContent={task} 
-                // textStyle = {{textDecoration: 'line-through'}}
                 removeTask = {() => handleRemove(index)}
-                textStyle = {noStyle}
-                click = {() => ChangeBtnStatus(index, task)}
-
                 >
 
                 </ListSection>
