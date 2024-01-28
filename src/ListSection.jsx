@@ -1,12 +1,17 @@
+
+
+
+
+
 const ListSection = (props) => {
+
     return (
-        <li className="listItem">{props.listContent}
-        <button index = {props.doneIndex} className="done" onClick={props.clickDone}>&#10003;</button>
-        <button index = {props.cancelId}  className="cancel" onClick = {props.clickRemove}
-        >X</button >
-        
+        <li className="listItem" style = {props.textStyle} >
+        <h5>- {props.listContent} </h5> 
+        <button className="done" onClick={props.click} >&#10003;</button>
+        <button className="cancel" onClick={props.removeTask}>X</button >
         </li>
-    
+        
     )
   }
 
